@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
     private static final String USGS_REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
     private static final int EARTHQUAKE_LOADER_ID = 1;
     private QuakeAdapter mAdapter;
+    private TextView mEmptyStateTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
             }
         });
 
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_message);
+        quakeListView.setEmptyView(mEmptyStateTextView);
 
         //Get a reference to the LoaderManager, in order to interact with loaders
         LoaderManager loaderManager = getLoaderManager();
@@ -91,6 +97,13 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+        // stop progress bar as finished loading
+        View progressSpinner = findViewById(R.id.loading_spinner);
+        progressSpinner.setVisibility(View.GONE);
+
+        // Set empty state text to display message
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
+
         // clear the adapter of previous earthquake data
         mAdapter.clear();
 
@@ -106,6 +119,9 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderCallb
         // Loader reset, so we can clear out existing data
         mAdapter.clear();
     }
+
+
+
 
 }
 
