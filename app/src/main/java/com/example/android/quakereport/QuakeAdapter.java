@@ -119,6 +119,8 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
         timeTextView.setText(formattedTime);
 
 
+
+
         // returns a list item view with all the data from our object
         return earthquakeView;
     }
