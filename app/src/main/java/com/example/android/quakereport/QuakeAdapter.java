@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * {@link QuakeAdapter} creates a list item layout for each earthquake in the list
@@ -26,14 +27,7 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
 
     private static final String LOCATION_SEPARATOR = " of ";
 
-    /**
-     * constructs a new {@link QuakeAdapter}
-     *
-     * @param context     of app
-     * @param earthquakes is the list of 'quakes, which provide data for the adapter
-     */
-
-    public QuakeAdapter(Context context, ArrayList<Earthquake> earthquakes) {
+    public QuakeAdapter(Context context, List<Earthquake> earthquakes) {
         super(context, 0, earthquakes);
     }
 
@@ -103,7 +97,6 @@ public class QuakeAdapter extends ArrayAdapter<Earthquake> {
 
         // Create new date object from time in milliseconds of the earthquake
         Date dateObject = new Date(currentQuake.getTimeInMilliseconds());
-
         // find textview with id date.
         TextView dateTextView = (TextView) earthquakeView.findViewById(R.id.quake_date);
         // formats the date string
